@@ -17,11 +17,11 @@ const MainPage = () => {
     }
     return (
         <div className='max-w-lg mx-auto w-full'>
-            <div className='w-full h-screen flex flex-col justify-start pt-16 relative gap-16 px-4'>
-                <h1 className='font-[inter] text-center text-lg font-[600]'>Daily Strike</h1>
+            <div className='w-full h-[100svh] flex flex-col justify-start pt-16 relative px-4 gap-4'>
+                <h1 className='font-[inter] text-center text-lg font-[600] mb-8'>Daily Strike</h1>
 
                 {/* Fire GIF */}
-                <div className='w-full h-fit  flex items-center justify-center'>
+                <div className='w-full h-fit flex items-center justify-center bg-blue-50 rounded-xl'>
                     {absenButton ? (
                         <img src="/assets/flame.gif" alt="Flame animation" width={'128px'} />
                     ) : (
@@ -41,6 +41,8 @@ const MainPage = () => {
                         )}
                     </ul>
                 </div>
+
+              
 
                 {/* BUTTON ON FIRE */}
                 <div className='max-w-lg fixed left-[50%] translate-x-[-50%] bottom-4 w-full h-16 px-4'>
