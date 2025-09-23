@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HabitDays } from './libs/DataHabit'
 import { ChevronRight } from 'lucide-react'
+import Confeti from './components/confeti'
 
 const MainPage = () => {
     const [absenButton, setAbsenButton] = useState(() => {
@@ -15,18 +16,44 @@ const MainPage = () => {
             return newValue;
         });
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setAbsenButton(false)
+        }, 7000)
+    }, [absenButton])
+
+
+    // PROGRESS BAR
+    const [progressBar, setProgressBar] = useState(40)
     return (
         <div className='max-w-lg mx-auto w-full'>
             <div className='w-full h-[100svh] flex flex-col justify-start pt-16 relative px-4 gap-4'>
                 <h1 className='font-[inter] text-center text-lg font-[600] mb-8'>Daily Strike</h1>
-
+                {absenButton && (
+                    <Confeti />
+                )}
                 {/* Fire GIF */}
-                <div className='w-full h-fit flex items-center justify-center bg-blue-50 rounded-xl'>
+                <div className='w-full h-fit py-4 flex items-center justify-center bg-blue-50 rounded-xl flex flex-col px-4'>
                     {absenButton ? (
                         <img src="/assets/flame.gif" alt="Flame animation" width={'128px'} />
                     ) : (
                         <img src="/assets/flame2.png" alt="Flame" width={'128px'} className='grayscale' />
                     )}
+
+                    <div className='w-full h-fit flex gap-4 items-center mt-8'>
+                        <p className='text-sm'>40%</p>
+                        <div className='w-full h-2 bg-gray-200 rounded-full relative'>
+
+                            {/* SEKAT PROGRESS BAR */}
+                            <div className={`${progressBar >= 33 ? 'bg-white' : 'bg-gray-400'} w-[2px] h-2 absolute left-[33.5%]`} />
+                            <div className={`${progressBar >= 33 ? 'bg-white' : 'bg-gray-400'} w-[2px] h-2 absolute left-[66.5%]`} />
+
+                            {/* PROGRESS BAR */}
+                            <div className={`${progressBar <= 33 ? "bg-red-400" : progressBar <= 66 ? "bg-orange-400" : "bg-blue-400"} w-[40%] h-full rounded-full`} />
+                        </div>
+                        <p className='text-sm'>100%</p>
+                    </div>
                 </div>
 
                 {/* DAY LIST */}
@@ -42,10 +69,8 @@ const MainPage = () => {
                     </ul>
                 </div>
 
-              
-
                 {/* BUTTON ON FIRE */}
-                <div className='max-w-lg fixed left-[50%] translate-x-[-50%] bottom-4 w-full h-16 px-4'>
+                <div className='max-w-lg fixed z-40 left-[50%] translate-x-[-50%] bottom-4 w-full h-16 px-4'>
                     <button className={`${absenButton ? 'bg-blue-300' : 'hover:bg-blue-600'} w-full h-full rounded-full bg-blue-500  text-white font-bold font-[poppins]`} onClick={AbsenButton} disabled={absenButton && true}>{!absenButton ? 'Absen Hari ini' : 'Besok Lagi Yaa'} </button>
                 </div>
             </div>
