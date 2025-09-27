@@ -9,30 +9,34 @@ const MainPage = () => {
         return saveAbsen ? JSON.parse(saveAbsen) : false
     })
 
+    // CONFETI
+    const [ConfetiState, setConfeti] = useState(false)
+    useEffect(() => {
+        setTimeout(() => {
+            setConfeti(false)
+        }, 4000)
+    }, [ConfetiState])
+
     function AbsenButton() {
         setAbsenButton(prev => {
             const newValue = !prev;
             localStorage.setItem('saveAbsen', JSON.stringify(newValue));
             return newValue;
         });
+        setConfeti(prev => !prev)
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            setAbsenButton(false)
-        }, 7000)
-    }, [absenButton])
-
 
     // PROGRESS BAR
     const [progressBar, setProgressBar] = useState(40)
+
     return (
         <div className='max-w-lg mx-auto w-full'>
             <div className='w-full h-[100svh] flex flex-col justify-start pt-16 relative px-4 gap-4'>
                 <h1 className='font-[inter] text-center text-lg font-[600] mb-8'>Daily Strike</h1>
-                {absenButton && (
-                    <Confeti />
-                )}
+
+                {/* Confeti absen */}
+                {ConfetiState && <Confeti />}
+
                 {/* Fire GIF */}
                 <div className='w-full h-fit py-4 flex items-center justify-center bg-blue-50 rounded-xl flex flex-col px-4'>
                     {absenButton ? (
@@ -71,7 +75,7 @@ const MainPage = () => {
 
                 {/* BUTTON ON FIRE */}
                 <div className='max-w-lg fixed z-40 left-[50%] translate-x-[-50%] bottom-4 w-full h-16 px-4'>
-                    <button className={`${absenButton ? 'bg-blue-300' : 'hover:bg-blue-600'} w-full h-full rounded-full bg-blue-500  text-white font-bold font-[poppins]`} onClick={AbsenButton} disabled={absenButton && true}>{!absenButton ? 'Absen Hari ini' : 'Besok Lagi Yaa'} </button>
+                    <button className={`${absenButton ? 'bg-blue-200' : 'hover:bg-blue-600'} w-full h-full rounded-full bg-blue-500  text-white font-bold font-[poppins]`} onClick={AbsenButton} disabled={absenButton && true}>{!absenButton ? 'Absen Hari ini' : 'Besok Lagi Yaa'} </button>
                 </div>
             </div>
         </div>
